@@ -21,6 +21,6 @@ const linkSchema = new Schema ({
 )
 
 
-const Links = model ("Links",linkSchema)
+const Link = model ("Link",linkSchema)
 
-export default Links;
+export default Link;
