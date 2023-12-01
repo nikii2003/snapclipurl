@@ -1,6 +1,5 @@
 import express from "express"
 import mongoose from "mongoose"
-import Links from "./models/Link.js";
 import dotenv from 'dotenv'
 import Link from "./models/Link.js";
 dotenv.config();
@@ -22,19 +21,18 @@ connectDB();
 app.post('/link', async ( req ,res)=>{
 const {url,slug}=req.body;
 const randomSlug = Math.random().toString(36).substring(2,7)
-const createLink = new Links({
+const link = new Link ({
 url : url,
 slug : slug || randomSlug,
-
 })
 try{
-    const savedLinks = await createLink.save();
-    res.json({
+    const savedLinks = await link.save();
+   return res.json({
     success: true,
     data:{
-    shortLinks: `${process.env.BASE_URL}/${savedLinks.slug}`
+    shortUrl: `${process.env.BASE_URL}/${savedLinks.slug}`
     },
-    message : "successfuly create links....."
+    message : "Link save successfully....."
     })
 }catch (err){
 res.json({
@@ -44,22 +42,47 @@ res.json({
 }
 })
 
-app.get('/:slug', async(req,res)=>{
-const {slug}=req.params;
+// app.get('/:slug', async(req,res)=>{
+// const {slug}=req.params;
 
-const findSlug =await Link.findOne({slug : slug});
+// const link =await Link.findOne({slug : slug});
+// await Link.updateOne({slug : slug},{$set : {
+//    clicks : link.clicks + 1 
+// }})
 
-await Link.updateOne({slug : slug},{$set : {
-   clicks : findSlug.clicks + 1 
-}})
 
-res.redirect(findSlug.url);
-if(!findSlug){
-    return res.json({
-        success : false,
-        message : "Link Not Found ."
-    })
-}
+// if(!link){
+//     return res.json({
+//         success : false,
+//         message : "Link Not Found ."
+//     })
+// }
+// res.redirect(link.url);
+// })
+app.get('/:slug', async (req, res) => {
+    const { slug } = req.params;
+    const link = await Link.findOne({ slug: slug });
+  
+    if (!link) {
+      return res.json({
+        success: false,
+        message: "Link Not Found."
+      });
+    }
+  
+    await Link.updateOne({ slug: slug }, { $set: { clicks: link.clicks + 1 } });
+  
+    res.redirect(link.url);
+  });
+
+app.get('/api/links',async(req,res)=>{
+ 
+   const findAllLinks = await Link.find()
+   return res.json({
+   success : true,
+   data : findAllLinks,
+   message : "Link fetch Successfully"
+  })
 })
 const PORT = process.env.PORT || 5000;
 

@@ -1,3 +1,62 @@
+
 .heading-url{
   text-align: center;
+}
+.main-links-container{
+  display: flex;
+  justify-content: space-around;
+}
+.create-links-box{
+
+  
+  
+}
+.input-container{
+display: flex;
+flex-direction: column;
+}
+.input-box{
+  margin: 10px;
+  width: 400px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px;
+  outline-color:  #5d13d4;
+
+}
+
+.btn-create-URL{
+  border-radius: 10px;
+  height: 40px;
+  margin-top: 40px;
+  width: 200px;
+  cursor: pointer;
+  display: block;
+  margin: 10px auto;
+  margin-top: 50px;
+  background-color: rgb(228, 215, 228);
+}
+.container{
+ background-color: #C493FF;
+  height: 400px;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+ 
+}
+.copy-image{
+  height: 25px;
+  position: absolute;
+  right: 40px;
+  bottom: 165px;
+  cursor: pointer;
+}
+.copy-image:hover{
+  height: 27px;
+  transition: 0.5s;
+}
+.short-url{
+  border: 0.5px solid white;
 }
