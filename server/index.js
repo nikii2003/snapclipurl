@@ -1,13 +1,10 @@
-import express from "express"
-import mongoose from "mongoose"
+import express from 'express'
+import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import Link from "./models/Link.js";
 dotenv.config();
-
 const app = express();
 app.use(express.json());
-
-
 const connectDB = async () =>{
     const conn = await mongoose.connect(process.env.MONGODB_URI);
     if(conn){
@@ -17,7 +14,6 @@ const connectDB = async () =>{
 connectDB();
 
 // POST request for creating links 
-
 app.post('/link', async ( req ,res)=>{
 const {url,slug}=req.body;
 const randomSlug = Math.random().toString(36).substring(2,7)
@@ -26,11 +22,11 @@ url : url,
 slug : slug || randomSlug,
 })
 try{
-    const savedLinks = await link.save();
+    const savedLink = await link.save();
    return res.json({
     success: true,
     data:{
-    shortUrl: `${process.env.BASE_URL}/${savedLinks.slug}`
+      shortUrl: `${process.env.BASE_URL}/${savedLink.slug}`
     },
     message : "Link save successfully....."
     })
@@ -77,7 +73,7 @@ app.get('/:slug', async (req, res) => {
 
 app.get('/api/links',async(req,res)=>{
  
-   const findAllLinks = await Link.find()
+   const findAllLinks = await Link.find({})
    return res.json({
    success : true,
    data : findAllLinks,
@@ -87,7 +83,7 @@ app.get('/api/links',async(req,res)=>{
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT,()=>{
-    console.log("server is connected successfully")
+    console.log(`server is running on PORT ${PORT}`)
 })
 
 

@@ -1,15 +1,16 @@
-
+body{
+  background-color: #ccccff;
+}
 .heading-url{
   text-align: center;
+  font-family: 'Courier New', Courier, monospace; 
 }
 .main-links-container{
   display: flex;
   justify-content: space-around;
 }
-.create-links-box{
-
-  
-  
+.heading-link{
+  font-family: 'Courier New', Courier, monospace;
 }
 .input-container{
 display: flex;
@@ -44,6 +45,7 @@ flex-direction: column;
   border-radius: 10px;
   position: relative;
   box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.2);
+  margin-top: 70px;
  
 }
 .copy-image{
@@ -59,4 +61,30 @@ flex-direction: column;
 }
 .short-url{
   border: 0.5px solid white;
+}
+.all-links-url-container{
+  box-shadow: 5px -2px 10px 1px #666699;
+  padding: 10px ;
+  margin: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #d5b6fc;
+}
+.allLinks-heading{
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace; 
+}
+.url{
+  color: #192ef0;
+}
+.all-links-container{
+  height: 550px;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: scroll;
+  
+}
+.all-links-container::-webkit-scrollbar{
+  display: none;
 }

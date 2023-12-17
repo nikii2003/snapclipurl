@@ -19,8 +19,6 @@ const linkSchema = new Schema ({
     timestamps : true
 }
 )
-
-
-const Link = model ("Link",linkSchema)
+const Link = model ('Link',linkSchema)
 
 export default Link;

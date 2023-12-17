@@ -1,24 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import IMGurl from "./../../client/src/copy-regular.svg"
-import axios from 'axios'
 import "./App.css"
+import axios from 'axios';
 
 function App() {
   const [url,setURL]=useState('')
   const [slug,setSlug]=useState('')
-  const [shortUrl,setShortURL]=useState('')
+  const [shortUrl,setShortUrl]=useState('')
+  const [links,setLinks]=useState([])
   
-const generateURL = async ()=>{
+const generateLink = async ()=>{
   const response = await axios.post('/link',{
     url,
     slug
   })
-  setShortURL(response?.data?.data?.shortUrl)
+  setShortUrl(response?.data?.data?.shortUrl)
 }
-const copyURL = ()=>{
+const copyShortURL = ()=>{
   navigator.clipboard.writeText(shortUrl)
   alert("copied Url") 
 }
+
+const loadLinks = async () =>{
+  const response = await axios.get('/api/links');
+  setLinks(response?.data?.data);
+}
+useEffect (()=>{
+  loadLinks();
+},[])
   return (
     <div>
       <h1 className='heading-url'>SnapClipURL</h1>
@@ -49,25 +58,35 @@ const copyURL = ()=>{
         type='text'
         disabled
         onChange={(e)=>{
-          setShortURL(e.target.value)
+          setShortUrl(e.target.value)
         }}/>
         
-        <button className='btn-create-URL'type='button' onClick={generateURL}>
+        <button className='btn-create-URL'type='button' onClick={generateLink}>
           Generate  URL
          
         </button>
-        <img src={IMGurl} className='copy-image'onClick={copyURL}/>
+        <img src={IMGurl} className='copy-image'onClick={copyShortURL}/>
         </div>
         </div>
         </div>
-        <div>
-         <h1>All Links </h1>
+        <div className='all-links-container'>
+         
+         {
+          links?.map((linkObj, index)=>{
+          const {url,slug,clicks}=linkObj;
+          
+          return(
+            <div className='all-links-url-container'>
+              <p>URL : <a href={url} className='url'>{url}</a></p>
+              <p> Short URL : {process.env.REACT_APP_BASE_SLUG}/{slug}</p>
+              <p> clicks : {clicks}</p>
+            </div>
+          )
+          })
+         }
         </div>
       </div>
     </div>
-
-   
   )
 }
-
 export default App
